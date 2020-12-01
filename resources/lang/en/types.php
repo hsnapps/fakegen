@@ -19,7 +19,7 @@ return [
             'min' => null,
             'max' => null,
             'init' => null,
-            'type' => ['male', 'female'],
+            'type' => ['Male', 'Female'],
         ],
         'suffix' => [
             'title' => 'Suffix',
@@ -35,7 +35,7 @@ return [
             'min' => null,
             'max' => null,
             'init' => null,
-            'type' => ['male', 'female'],
+            'type' => ['Male', 'Female'],
         ],
         'lastName' => [
             'title' => 'Last Name',
@@ -234,8 +234,8 @@ return [
             'size' => null,
             'min' => null,
             'max' => null,
-            'init' => 'date',
-            'type' => null,
+            'init' => now()->format('Y-m-d'),
+            'type' => 'date',
         ],
         'dateTimeBetween' => [
             'title' => 'Date',

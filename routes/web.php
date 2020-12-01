@@ -15,3 +15,4 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'home']);
+Route::post('/add', [HomeController::class, 'addFeild'])->name('add');

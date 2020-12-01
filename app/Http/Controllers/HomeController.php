@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,5 +15,12 @@ class HomeController extends Controller
         // dd($date);
 
         return view('home');
+    }
+
+    public function addFeild(Request $request)
+    {
+        dd($request->all());
+
+        // Session
     }
 }

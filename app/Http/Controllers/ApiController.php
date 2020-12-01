@@ -6,6 +6,11 @@ namespace App\Http\Controllers;
 
 class ApiController extends Controller
 {
+    public function getCategories()
+    {
+        return response()->json(__('categories'));
+    }
+
     public function getSubCategories($category)
     {
         $data = [];
