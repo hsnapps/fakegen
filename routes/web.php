@@ -20,3 +20,4 @@ Route::post('/remove-all', [HomeController::class, 'removeAllRows'])->name('remo
 Route::post('/remove', [HomeController::class, 'removeRow'])->name('remove');
 Route::post('/move-up', [HomeController::class, 'moveUp'])->name('move-up');
 Route::post('/move-down', [HomeController::class, 'moveDown'])->name('move-down');
+Route::post('/generate', [HomeController::class, 'generate'])->name('generate');

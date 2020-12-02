@@ -16,7 +16,7 @@
         <tfoot>
             <tr>
                 <td colspan="3">
-                    <button type="button" class="uk-button uk-button-default"><span uk-icon="icon: cog"></span> Generate Data</button>
+                    <button type="button" class="uk-button uk-button-default" uk-toggle="target: #modal-generate" ><span uk-icon="icon: cog"></span> Generate Data</button>
                     <button type="submit" class="uk-button uk-button-default uk-text-danger" onclick="removeAll()"><span uk-icon="icon: trash"></span> Remove all feilds</button>
                 </td>
             </tr>

@@ -25,6 +25,7 @@
 @if (isset($table))
     @include('components.table')
     @include('components.action_forms')
+    @include('components.generate')
 @endif
 
 @endsection

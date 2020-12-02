@@ -163,4 +163,12 @@ class HomeController extends Controller
         });
         return $sorted;
     }
+
+    public function generate(Request $request)
+    {
+        dd($request->all());
+        $session = session()->all();
+        $table = Arr::except($session, $this->except);
+        $faker = \Faker\Factory::create($request->locale);
+    }
 }
