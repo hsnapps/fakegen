@@ -85,12 +85,24 @@ class HomeController extends Controller
 
         if (session()->has('table')) {
             $table = session('table', []);
+            $data['index'] = count($table);
             array_push($table, [$key => $data]);
             session(['table' => $table]);
         } else {
+            $data['index'] = 0;
             session([$key => $data]);
         }
 
         return back()->with('success', 'Field added successfully..');
+    }
+
+    public function removeAllRows()
+    {
+        $session = session()->all();
+        $table = Arr::except($session, $this->except);
+        foreach ($table as $key => $value) {
+            session()->forget($key);
+        }
+        return back()->with('success', 'All feilds have been removed..');
     }
 }

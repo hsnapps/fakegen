@@ -42,7 +42,10 @@
                     <button type="button" class="uk-button uk-button-default"><span uk-icon="icon: cog"></span> Generate Data</button>
                 </td>
                 <td>
-                    <button type="button" class="uk-button uk-button-default uk-text-danger"><span uk-icon="icon: trash"></span> Remove all feilds</button>
+                    <form action="{{ route('remove-all') }}" method="post">
+                        @csrf
+                        <button type="submit" class="uk-button uk-button-default uk-text-danger"><span uk-icon="icon: trash"></span> Remove all feilds</button>
+                    </form>
                 </td>
                 <td></td>
             </tr>
