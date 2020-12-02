@@ -24,7 +24,7 @@
 
 @if (isset($table))
 <div class="uk-form-horizontal uk-card uk-card-default uk-card-body uk-width-1-1 uk-margin-large-top">
-    <table class="uk-table">
+    <table class="uk-table uk-table-hover">
         <caption>Fields List</caption>
         <thead>
             <tr>
@@ -60,9 +60,9 @@
                 <td>{{ $value['max'] }}</td>
                 <td>
                     <ul class="uk-iconnav">
-                        <li><a href="#" uk-icon="icon: chevron-up"></a></li>
-                        <li><a href="#" uk-icon="icon: chevron-down"></a></li>
-                        <li><a class="uk-text-danger" href="#" uk-icon="icon: trash"></a></li>
+                        <li><a href="#" uk-icon="icon: chevron-up" onclick="up('{{ $key }}')"></a></li>
+                        <li><a href="#" uk-icon="icon: chevron-down" onclick="down('{{ $key }}')"></a></li>
+                        <li><a class="uk-text-danger" href="#" uk-icon="icon: trash" onclick="removeRow('{{ $key }}')"></a></li>
                     </ul>
                 </td>
             </tr>
@@ -70,7 +70,13 @@
         </tbody>
     </table>
 </div>
+
+<form id="delete-form" action="{{ route('remove') }}" method="post">
+    @csrf
+    <input type="hidden" name="key" id="delete-key">
+</form>
 @endif
+
 @endsection
 
 @push('scripts')

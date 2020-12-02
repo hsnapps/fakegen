@@ -2,7 +2,7 @@
     <div>
         <label class="uk-form-label" for="label">Label</label>
         <div class="uk-form-controls">
-            <input class="uk-input" id="label" name="label" type="text" placeholder="Label" required autocomplete="off">
+            <input class="uk-input" id="label" name="label" type="text" placeholder="Label" required autocomplete="off" autofocus>
         </div>
     </div>
 

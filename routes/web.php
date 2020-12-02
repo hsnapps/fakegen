@@ -17,3 +17,4 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'home']);
 Route::post('/add', [HomeController::class, 'addFeild'])->name('add');
 Route::post('/remove-all', [HomeController::class, 'removeAllRows'])->name('remove-all');
+Route::post('/remove', [HomeController::class, 'removeRow'])->name('remove');

@@ -26,16 +26,9 @@ class HomeController extends Controller
 
         $table = null;
 
-        // session()->forget('table');
-
         $session = session()->all();
         $table = Arr::except($session, $this->except);
         // dd($table);
-
-        // if (isset($table)) {
-        //     $table = session('table');
-        //     dd($table);
-        // }
 
         return view('home', [
             'table' => $table,
@@ -82,16 +75,11 @@ class HomeController extends Controller
         }
 
         $key = Str::random(40);
+        $session = session()->all();
+        $table = Arr::except($session, $this->except);
+        $data['index'] = count($table);
 
-        if (session()->has('table')) {
-            $table = session('table', []);
-            $data['index'] = count($table);
-            array_push($table, [$key => $data]);
-            session(['table' => $table]);
-        } else {
-            $data['index'] = 0;
-            session([$key => $data]);
-        }
+        session([$key => $data]);
 
         return back()->with('success', 'Field added successfully..');
     }
@@ -104,5 +92,11 @@ class HomeController extends Controller
             session()->forget($key);
         }
         return back()->with('success', 'All feilds have been removed..');
+    }
+
+    public function removeRow(Request $request)
+    {
+        session()->forget($request->key);
+        return back()->with('success', 'Row has been removed successfully..');
     }
 }

@@ -97,4 +97,20 @@ function showError(err) {
     // console.error(err);
 }
 
+function removeRow(key) {
+    UIkit.modal.confirm('Remove this entry?').then(function() {
+        document.getElementById('delete-key').value = key;
+        document.getElementById('delete-form').submit();
+    }, function () {});
+
+}
+
+function up(key) {
+
+}
+
+function down(key) {
+
+}
+
 fillCategories();
