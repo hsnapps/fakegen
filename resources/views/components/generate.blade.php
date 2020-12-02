@@ -17,9 +17,22 @@
                 <div class="uk-form-controls">
                     <select class="uk-select" id="locale" name="locale">
                         @foreach (__('locales') as $locale => $localeName)
-                        <option value="{{ $locale }}">{{ $localeName }}</option>
+                        <option value="{{ $locale }}" {{ $locale === 'en_US' ? 'selected' : '' }}>{{ $localeName }}</option>
                         @endforeach
                     </select>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-label">Select file format</div>
+                <div class="uk-form-controls" uk-grid>
+                    @foreach (__('formats') as $format => $formatName)
+                    <div>
+                        <label>
+                            <input class="uk-radio" type="radio" name="format" value="{{ $format }}" {{ $formatName === 'XLSX' ? 'checked' : '' }}> {{ $formatName }}
+                        </label>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

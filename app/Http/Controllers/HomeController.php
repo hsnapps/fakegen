@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Faker\Factory;
+use App\Code\Generator;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\GeneralExport;
 
 class HomeController extends Controller
 {
-    protected $except = [
+    private $except = [
         '_token',
         '_previous',
         '_flash',
@@ -17,24 +21,12 @@ class HomeController extends Controller
         'warning',
     ];
 
+    private $log = false;
+
     public function home()
     {
-        // $faker = \Faker\Factory::create();
-        // $name = $faker->name('male');
-        // $date = $faker->iso8601();
-        // dd($date);
-
-        $table = null;
-
-        $session = session()->all();
-        $table = Arr::except($session, $this->except);
-        $sorted = Arr::sort($table, function ($value) {
-            return $value['index'];
-        });
-        // dd($sorted);
-
         return view('home', [
-            'table' => $sorted,
+            'table' => $this->getSortedData(),
         ]);
     }
 
@@ -156,19 +148,74 @@ class HomeController extends Controller
             session([$key => $data]);
         }
 
+        return $this->getSortedData();
+    }
+
+    private function getSortedData() : array
+    {
         $session = session()->all();
         $table = Arr::except($session, $this->except);
+        if ($this->log) {
+            logger($table);
+        }
         $sorted = Arr::sort($table, function ($value) {
-            return $value['index'];
+            if (is_array($value)) {
+                if (in_array('index', $value, true)) {
+                    return $value['index'];
+                }
+            }
         });
+
         return $sorted;
     }
 
     public function generate(Request $request)
     {
-        dd($request->all());
-        $session = session()->all();
-        $table = Arr::except($session, $this->except);
-        $faker = \Faker\Factory::create($request->locale);
+        // dd($request->all());
+
+        $this->log = true;
+
+        $format = strtolower($request->format);
+        $table = $this->getSortedData();
+        $faker = Factory::create($request->locale);
+        $data = [];
+
+        switch ($format) {
+            case 'xlsx':
+            case 'csv':
+            case 'tsv':
+            case 'ods':
+            case 'xls':
+            case 'html':
+                $fileName = 'generated_values.'.$format;
+                break;
+
+            default:
+            $fileName = 'generated_values.pdf';
+                break;
+        }
+
+        foreach ($table as $key => $value) {
+            $header = $value['label'];
+            if ($value['category'] === 'person') {
+                for ($i=0; $i < $request->number; $i++) {
+                    $data[$header][$i] = Generator::person($value, $faker);
+                }
+            }
+
+            if ($value['category'] === 'datetime') {
+                for ($i=0; $i < $request->number; $i++) {
+                    $data[$header][$i] = Generator::datetime($value, $faker);
+                }
+            }
+        }
+
+        $export = new GeneralExport($data);
+        if (Excel::store($export, $fileName, 'downloads')) {
+            return back()->with('file', 'To download file click here');
+        }
+
+        // return back()->with('error', 'Error in generating file!');
+        return redirect()->route('home', ['table' => $table])->with('error', 'Error in generating file!');
     }
 }

@@ -25,12 +25,16 @@
             @foreach ($table as $key => $value)
             <tr id="{{ $key }}">
                 <td>{{ $loop->index + 1 }}</td>
-                <td>{{ $value['label'] }}</td>
+                <td>{{ isset($value['label']) ? $value['label'] ? '' }}</td>
+                @if (isset($value['category']) && isset($value['sub_category']))
                 <td>{{ sprintf('%s [%s]', __('categories.'.$value['category']), __('types.'.$value['category'].'.'.$value['sub_category'].'.title'))  }}</td>
-                <td>{{ $value['type'] }}</td>
-                <td>{{ $value['size'] }}</td>
-                <td>{{ $value['min'] }}</td>
-                <td>{{ $value['max'] }}</td>
+                @else
+                <td></td>
+                @endif
+                <td>{{ isset($value['type']) ? $value['type'] : '' }}</td>
+                <td>{{ isset($value['size']) ? $value['size'] : '' }}</td>
+                <td>{{ isset($value['min']) ? $value['min'] : '' }}</td>
+                <td>{{ isset($value['max']) ? $value['max'] : '' }}</td>
                 <td>
                     <ul class="uk-iconnav">
                         <li><a href="#" uk-icon="icon: chevron-up" onclick="up('{{ $key }}', Number('{{ $value['index'] }}'))"></a></li>

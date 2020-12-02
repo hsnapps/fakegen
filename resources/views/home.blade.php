@@ -12,6 +12,12 @@
             <p id="err-message"></p>
         </div>
 
+        @if (session('file'))
+        <div class="uk-alert-success" uk-alert>
+            <p>{{ session('file') }}</p>
+        </div>
+        @endif
+
         @include('shared.validation')
         @include('components.form')
     </div>
