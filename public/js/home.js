@@ -102,15 +102,24 @@ function removeRow(key) {
         document.getElementById('delete-key').value = key;
         document.getElementById('delete-form').submit();
     }, function () {});
-
 }
 
-function up(key) {
-
+function removeAll() {
+    UIkit.modal.confirm('Remove all entries?').then(function() {
+        document.getElementById('remove-all').submit();
+    }, function () {});
 }
 
-function down(key) {
+function up(key, index) {
+    if(index === 0) return;
+    document.getElementById('up-key').value = key;
+    document.getElementById('up-form').submit();
+}
 
+function down(key, index, count) {
+    if(index === count) return;
+    document.getElementById('down-key').value = key;
+    document.getElementById('down-form').submit();
 }
 
 fillCategories();

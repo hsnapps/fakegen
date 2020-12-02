@@ -14,7 +14,9 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::post('/add', [HomeController::class, 'addFeild'])->name('add');
 Route::post('/remove-all', [HomeController::class, 'removeAllRows'])->name('remove-all');
 Route::post('/remove', [HomeController::class, 'removeRow'])->name('remove');
+Route::post('/move-up', [HomeController::class, 'moveUp'])->name('move-up');
+Route::post('/move-down', [HomeController::class, 'moveDown'])->name('move-down');
