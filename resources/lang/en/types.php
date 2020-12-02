@@ -19,7 +19,7 @@ return [
             'min' => null,
             'max' => null,
             'init' => null,
-            'type' => ['Male', 'Female'],
+            'type' => ['Any', 'Male', 'Female'],
         ],
         'suffix' => [
             'title' => 'Suffix',
@@ -35,7 +35,7 @@ return [
             'min' => null,
             'max' => null,
             'init' => null,
-            'type' => ['Male', 'Female'],
+            'type' => ['Any', 'Male', 'Female'],
         ],
         'lastName' => [
             'title' => 'Last Name',

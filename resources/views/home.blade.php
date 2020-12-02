@@ -12,65 +12,8 @@
             <p id="err-message"></p>
         </div>
 
-        <div class="uk-grid-small uk-child-width-expand" uk-grid>
-            <div>
-                <label class="uk-form-label" for="label">Label</label>
-                <div class="uk-form-controls">
-                    <input class="uk-input" id="label" name="label" type="text" placeholder="Label" required>
-                </div>
-            </div>
-
-            <div>
-                <label class="uk-form-label" for="categories">Data Category</label>
-                <div class="uk-form-controls">
-                    <select class="uk-select" id="categories" name="categories" onchange="fillSubCategories(event.target.value)"></select>
-                </div>
-            </div>
-
-            <div>
-                <label class="uk-form-label" for="sub-categories">Sub Category</label>
-                <div class="uk-form-controls">
-                    <select class="uk-select" id="sub-categories" name="sub_categories" onchange="renderProperties(event.target.value)"></select>
-                </div>
-            </div>
-        </div>
-
-        <div class="uk-grid-small uk-child-width-expand" uk-grid>
-            <div id="size_div">
-                <label class="uk-form-label" for="size">Size</label>
-                <div class="uk-form-controls">
-                    <input class="uk-input" id="size" name="size" type="text" placeholder="Size">
-                </div>
-            </div>
-
-            <div id="min_div">
-                <label class="uk-form-label" for="min">Min</label>
-                <div class="uk-form-controls">
-                    <input class="uk-input" id="min" name="min" type="text" placeholder="Min">
-                </div>
-            </div>
-
-            <div id="max_div">
-                <label class="uk-form-label" for="max">Max</label>
-                <div class="uk-form-controls">
-                    <input class="uk-input" id="max" name="max" type="text" placeholder="Max">
-                </div>
-            </div>
-
-            <div id="init_div">
-                <label class="uk-form-label" for="init">Init.</label>
-                <div class="uk-form-controls">
-                    <input class="uk-input" id="init" name="init" type="text" placeholder="Init.">
-                </div>
-            </div>
-
-            <div id="type_div">
-                <label class="uk-form-label" for="type">Type / Gender</label>
-                <div class="uk-form-controls">
-                    <select class="uk-select" name="type" id="type"></select>
-                </div>
-            </div>
-        </div>
+        @include('shared.validation')
+        @include('components.form')
     </div>
 
     <div class="uk-card-footer">
@@ -79,6 +22,7 @@
     </div>
 </form>
 
+@if (isset($table))
 <div class="uk-form-horizontal uk-card uk-card-default uk-card-body uk-width-1-1 uk-margin-large-top">
     <table class="uk-table">
         <caption>Fields List</caption>
@@ -104,12 +48,13 @@
             </tr>
         </tfoot>
         <tbody>
-            <tr>
-                <td>Label</td>
-                <td>Field Type</td>
-                <td>Size</td>
-                <td>Max</td>
-                <td>Min</td>
+            @foreach ($table as $key => $value)
+            <tr id="{{ $key }}">
+                <td>{{ $value['label'] }}</td>
+                <td>{{ $value['type'] }}</td>
+                <td>{{ $value['size'] }}</td>
+                <td>{{ $value['min'] }}</td>
+                <td>{{ $value['max'] }}</td>
                 <td>
                     <ul class="uk-iconnav">
                         <li><a href="#" uk-icon="icon: chevron-up"></a></li>
@@ -118,112 +63,13 @@
                     </ul>
                 </td>
             </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
+@endif
 @endsection
 
 @push('scripts')
-<script>
-    const headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    };
-
-    function fillCategories() {
-        const url = '/api/categories';
-
-        document.getElementById('categories').innerHTML = '';
-        fetch(url, headers)
-            .then(res => res.json())
-            .then(data => {
-                var html = '';
-                for (const item in data) {
-                    html += `<option value="${item}">${data[item]}</option>`;
-                }
-                document.getElementById('categories').innerHTML = html;
-
-                if (document.getElementById('categories').childNodes.length > 0) {
-                    fillSubCategories(document.getElementById('categories').childNodes[0].value);
-
-                }
-            })
-            .catch(err => showError(err));
-    }
-
-    function fillSubCategories(category) {
-        const url = '/api/types/' + category;
-        fetch(url, headers)
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('sub-categories').innerHTML = '';
-                var html = '';
-                for (const item in data) {
-                    html += `<option value="${item}">${data[item]}</option>`;
-                }
-                document.getElementById('sub-categories').innerHTML = html;
-
-                if (document.getElementById('sub-categories').childNodes.length > 0) {
-                    renderProperties(document.getElementById('sub-categories').childNodes[0].value);
-                }
-            })
-            .catch(err => showError(err));
-    }
-
-    function renderProperties(subcategory) {
-        const category = document.getElementById('categories').value;
-        const url = '/api/render/' + category + '/' + subcategory;
-
-        document.getElementById('init').setAttribute('type', 'text');
-        fetch(url, headers)
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('type').innerHTML = '';
-
-                for (const item in data) {
-                    if(item === 'title') continue;
-
-                    var show = data[item] === null ? 'none' : 'block';
-                    document.getElementById(item + '_div').style.display = show;
-
-                    if (item === 'type') {
-                        if (Array.isArray(data[item])) {
-                            var options = data[item];
-                            var html = '';
-                            for (const option in options) {
-                                html += `<option value="${options[option]}">${options[option]}</option>`;
-                            }
-                            document.getElementById('type').innerHTML = html;
-                        } else {
-                            document.getElementById('type_div').style.display = 'none';
-                            var val = data['type'];
-                            switch (val) {
-                                case 'date':
-                                    document.getElementById('init').setAttribute('type', 'date');
-                                    document.getElementById('min').setAttribute('type', 'date');
-                                    document.getElementById('max').setAttribute('type', 'date');
-                                    break;
-
-                                default:
-                                    break;
-                            }
-
-                            if(data['init']) {
-                                document.getElementById('init').value = data['init'];
-                            }
-                        }
-                    }
-                }
-            })
-            .catch(err => showError(err));
-    }
-
-    function showError(err) {
-        document.getElementById('err-message').innerText = err;
-        document.getElementById('err-alert').style.display = 'block';
-        // console.error(err);
-    }
-
-    fillCategories();
-</script>
+<script src="{{ url('js/home.js') }}"></script>
 @endpush
