@@ -15,7 +15,8 @@
     </div>
     <div class="uk-container uk-container-large uk-padding">
         <div class="uk-text-center">
-            <h1 class="uk-heading-medium">Fake Data Generator</h1>
+            <img class="uk-inline" data-src="{{ url('images/favicon.png') }}" width="128" alt="" uk-img>
+            <h1 class="uk-heading-medium uk-inline uk-margin-medium-bottom">Fake Data Generator</h1>
         </div>
         @yield('content')
     </div>
