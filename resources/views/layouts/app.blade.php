@@ -7,7 +7,7 @@
     <title>{{ config('app.name') }}</title>
     <link rel="stylesheet" href="{{ url(mix('css/app.css')) }}">
     <link rel="shortcut icon" type="image/png" href="{{ url('images/favicon.png') }}">
-    <link rel="stylesheet" media="screen and (max-width: 600px)" href="{{ url('small.css') }}">
+    <link rel="stylesheet" media="screen and (max-width: 600px)" href="{{ url('css/small.css') }}">
 </head>
 <body>
     <div class="paypal" style="position: absolute; top: 5px; right: 5px;">

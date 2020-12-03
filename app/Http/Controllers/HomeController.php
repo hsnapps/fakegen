@@ -10,6 +10,7 @@ use Faker\Factory;
 use App\Code\Generator;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\GeneralExport;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -246,5 +247,21 @@ class HomeController extends Controller
             'Content-Type' => __('content_types'.$ext),
         ];
         return Storage::disk('downloads')->download($file, $name, $headers);
+    }
+
+    public function flush()
+    {
+        $files = Storage::disk('downloads')->files('');
+        $data = [];
+
+        foreach ($files as $file) {
+            $lastModified = Storage::disk('downloads')->lastModified($file);
+            $date = Carbon::parse(date('Y-m-d H:i:s', $lastModified));
+            $diffInHours = $date->diffInHours(now());
+            if ($diffInHours > 2) {
+                Storage::disk('downloads')->delete($file);
+            }
+        }
+        return response('', 200);
     }
 }

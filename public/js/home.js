@@ -4,7 +4,7 @@ const headers = {
 };
 
 function fillCategories() {
-    const url = ROOT + '/api/categories';
+    const url = '/api/categories';
 
     document.getElementById('category').innerHTML = '';
     fetch(url, headers)
@@ -25,7 +25,7 @@ function fillCategories() {
 }
 
 function fillSubCategories(category) {
-    const url = ROOT + '/api/types/' + category;
+    const url = '/api/types/' + category;
     fetch(url, headers)
         .then(res => res.json())
         .then(data => {
@@ -45,7 +45,7 @@ function fillSubCategories(category) {
 
 function renderProperties(subcategory) {
     const category = document.getElementById('category').value;
-    const url = ROOT + '/api/render/' + category + '/' + subcategory;
+    const url = '/api/render/' + category + '/' + subcategory;
 
     document.getElementById('init').setAttribute('type', 'text');
     fetch(url, headers)
