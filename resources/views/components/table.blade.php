@@ -17,8 +17,8 @@
             <tfoot>
                 <tr>
                     <td colspan="3">
-                        <button type="button" class="uk-button uk-button-text uk-text-small@s" uk-toggle="target: #modal-generate" ><span uk-icon="icon: cog"></span> Generate</button>
-                        <button type="submit" class="uk-button uk-button-text uk-text-danger uk-text-small@s" onclick="removeAll()"><span uk-icon="icon: trash"></span> Remove all</button>
+                        <button type="button" class="uk-button uk-button-text uk-text-large@m uk-margin-large-right@m" uk-toggle="target: #modal-generate" ><span uk-icon="icon: cog"></span> Generate</button>
+                        <button type="submit" class="uk-button uk-button-text uk-text-danger uk-text-large@m" onclick="removeAll()"><span uk-icon="icon: trash"></span> Remove all</button>
                     </td>
                 </tr>
             </tfoot>
