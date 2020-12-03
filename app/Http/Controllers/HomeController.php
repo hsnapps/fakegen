@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\{Arr, Str};
+use Illuminate\Support\Facades\{Storage, Log};
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 use Faker\Factory;
 use App\Code\Generator;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\GeneralExport;
-use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -252,7 +251,6 @@ class HomeController extends Controller
     public function flush()
     {
         $files = Storage::disk('downloads')->files('');
-        $data = [];
 
         foreach ($files as $file) {
             $lastModified = Storage::disk('downloads')->lastModified($file);
@@ -262,6 +260,8 @@ class HomeController extends Controller
                 Storage::disk('downloads')->delete($file);
             }
         }
+
+        Log::channel('flush')->info(sprintf('Flushed %d files.', count($files)));
         return response('', 200);
     }
 }
