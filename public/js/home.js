@@ -77,6 +77,12 @@ function renderProperties(subcategory) {
                                 document.getElementById('max').setAttribute('type', 'date');
                                 break;
 
+                            case 'number':
+                                document.getElementById('init').setAttribute('type', 'number');
+                                document.getElementById('min').setAttribute('type', 'number');
+                                document.getElementById('max').setAttribute('type', 'number');
+                                break;
+
                             default:
                                 break;
                         }

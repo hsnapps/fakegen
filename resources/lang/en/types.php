@@ -157,7 +157,7 @@ return [
             'min' => -90,
             'max' => 90,
             'init' => null,
-            'type' => null,
+            'type' => 'number',
         ],
         'longitude' => [
             'title' => 'Longitude',
@@ -165,7 +165,7 @@ return [
             'min' => -180,
             'max' => 180,
             'init' => null,
-            'type' => null,
+            'type' => 'number',
         ],
     ],
     'phoneNumber' => [

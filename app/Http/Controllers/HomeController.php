@@ -206,6 +206,24 @@ class HomeController extends Controller
                     $data[$i][$header] = Generator::datetime($value, $faker);
                 }
             }
+
+            if($value['category'] === 'address') {
+                for ($i=0; $i < $request->number; $i++) {
+                    $data[$i][$header] = Generator::address($value, $faker);
+                }
+            }
+
+            if($value['category'] === 'company') {
+                for ($i=0; $i < $request->number; $i++) {
+                    $data[$i][$header] = Generator::company($value, $faker);
+                }
+            }
+
+            if($value['category'] === 'phoneNumber') {
+                for ($i=0; $i < $request->number; $i++) {
+                    $data[$i][$header] = Generator::phoneNumber($value, $faker);
+                }
+            }
         }
 
         // dd($data);
@@ -221,6 +239,12 @@ class HomeController extends Controller
 
     public function download($file)
     {
-        return Storage::disk('downloads')->download($file);
+        $pos = strpos($file, '.');
+        $ext = substr($file, $pos);
+        $name = 'generated_values'.$ext;
+        $headers = [
+            'Content-Type' => __('content_types'.$ext),
+        ];
+        return Storage::disk('downloads')->download($file, $name, $headers);
     }
 }
