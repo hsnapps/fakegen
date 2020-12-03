@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ config('app.name') }}</title>
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ url(mix('css/app.css')) }}">
+    <link rel="shortcut icon" type="image/png" href="{{ url('images/favicon.png') }}">
     <link rel="stylesheet" media="screen and (max-width: 600px)" href="{{ url('small.css') }}">
 </head>
 <body>
@@ -19,9 +20,12 @@
         @yield('content')
     </div>
 
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ url(mix('js/app.js')) }}"></script>
 
     @include('shared.flashes')
+    <script>
+        const ROOT = "{{ url('') }}";
+    </script>
     @stack('scripts')
 </body>
 </html>
