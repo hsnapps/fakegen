@@ -41,19 +41,20 @@ class FlushFiles extends Command
     {
         $hours = $this->option('hours');
         $files = Storage::disk('downloads')->files('');
+        $flushed = 0;
 
         foreach ($files as $file) {
             $lastModified = Storage::disk('downloads')->lastModified($file);
             $date = Carbon::parse(date('Y-m-d H:i:s', $lastModified));
             $diffInHours = $date->diffInHours(now());
             if ($diffInHours > $hours) {
+                $flushed++;
                 Storage::disk('downloads')->delete($file);
             }
         }
 
-        $count = count($files);
-        if ($count > 0) {
-            Log::channel('flush')->info(sprintf('Flushed %d files.', $count));
+        if ($flushed > 0) {
+            Log::channel('flush')->info(sprintf('Flushed %d files.', $flushed));
         }
     }
 }
