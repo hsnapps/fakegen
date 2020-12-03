@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Faker\Factory;
 use App\Code\Generator;
@@ -20,8 +21,6 @@ class HomeController extends Controller
         'error',
         'warning',
     ];
-
-    private $log = false;
 
     public function home()
     {
@@ -155,9 +154,6 @@ class HomeController extends Controller
     {
         $session = session()->all();
         $table = Arr::except($session, $this->except);
-        if ($this->log) {
-            logger($table);
-        }
         $sorted = Arr::sort($table, function ($value) {
             if (is_array($value)) {
                 if (in_array('index', $value, true)) {
@@ -173,12 +169,12 @@ class HomeController extends Controller
     {
         // dd($request->all());
 
-        $this->log = true;
-
         $format = strtolower($request->format);
         $table = $this->getSortedData();
         $faker = Factory::create($request->locale);
         $data = [];
+        $headers = [];
+        $fileName = Str::random();
 
         switch ($format) {
             case 'xlsx':
@@ -187,35 +183,44 @@ class HomeController extends Controller
             case 'ods':
             case 'xls':
             case 'html':
-                $fileName = 'generated_values.'.$format;
+                $fileName .= '.'.$format;
                 break;
 
             default:
-            $fileName = 'generated_values.pdf';
+            $fileName .= '.pdf';
                 break;
         }
 
         foreach ($table as $key => $value) {
             $header = $value['label'];
+            array_push($headers, $header);
+
             if ($value['category'] === 'person') {
                 for ($i=0; $i < $request->number; $i++) {
-                    $data[$header][$i] = Generator::person($value, $faker);
+                    $data[$i][$header] = Generator::person($value, $faker);
                 }
             }
 
             if ($value['category'] === 'datetime') {
                 for ($i=0; $i < $request->number; $i++) {
-                    $data[$header][$i] = Generator::datetime($value, $faker);
+                    $data[$i][$header] = Generator::datetime($value, $faker);
                 }
             }
         }
 
-        $export = new GeneralExport($data);
+        // dd($data);
+
+        $export = new GeneralExport($data, $headers);
         if (Excel::store($export, $fileName, 'downloads')) {
-            return back()->with('file', 'To download file click here');
+            return redirect()->route('home')->with('file', route('download', ['file' => $fileName]));
         }
 
         // return back()->with('error', 'Error in generating file!');
-        return redirect()->route('home', ['table' => $table])->with('error', 'Error in generating file!');
+        return redirect()->route('home')->with('error', 'Error in generating file!');
+    }
+
+    public function download($file)
+    {
+        return Storage::disk('downloads')->download($file);
     }
 }

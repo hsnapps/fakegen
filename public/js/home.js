@@ -54,7 +54,7 @@ function renderProperties(subcategory) {
             document.getElementById('type').innerHTML = '';
 
             for (const item in data) {
-                if(item === 'title') continue;
+                if (item === 'title') continue;
 
                 var show = data[item] === null ? 'none' : 'block';
                 document.getElementById(item + '_div').style.display = show;
@@ -81,11 +81,14 @@ function renderProperties(subcategory) {
                                 break;
                         }
 
-                        if(data['init']) {
+                        if (data['init']) {
                             document.getElementById('init').value = data['init'];
                         }
                     }
                 }
+
+                document.getElementById('min').value = data['min'];
+                document.getElementById('max').value = data['max'];
             }
         })
         .catch(err => showError(err));
@@ -101,23 +104,23 @@ function removeRow(key) {
     UIkit.modal.confirm('Remove this entry?').then(function() {
         document.getElementById('delete-key').value = key;
         document.getElementById('delete-form').submit();
-    }, function () {});
+    }, function() {});
 }
 
 function removeAll() {
     UIkit.modal.confirm('Remove all entries?').then(function() {
         document.getElementById('remove-all').submit();
-    }, function () {});
+    }, function() {});
 }
 
 function up(key, index) {
-    if(index === 0) return;
+    if (index === 0) return;
     document.getElementById('up-key').value = key;
     document.getElementById('up-form').submit();
 }
 
 function down(key, index, count) {
-    if(index === count) return;
+    if (index === count) return;
     document.getElementById('down-key').value = key;
     document.getElementById('down-form').submit();
 }

@@ -5,15 +5,17 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithProperties;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class GeneralExport implements FromCollection, WithProperties, WithCustomCsvSettings
+class GeneralExport implements FromCollection, WithProperties, WithCustomCsvSettings, WithHeadings
 {
-
+    public $headers;
     public $data;
 
-    function __construct($data)
+    function __construct($data, $headers)
     {
         $this->data = $data;
+        $this->headers = $headers;
     }
 
     /**
@@ -44,5 +46,10 @@ class GeneralExport implements FromCollection, WithProperties, WithCustomCsvSett
         return [
             'delimiter' => ';'
         ];
+    }
+
+    public function headings() : array
+    {
+        return $this->headers;
     }
 }

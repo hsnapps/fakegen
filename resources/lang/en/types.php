@@ -241,7 +241,7 @@ return [
             'title' => 'Date',
             'size' => null,
             'min' => now()->subYears(30)->format('Y-m-d'),
-            'max' => now()->subYears(30)->format('Y-m-d'),
+            'max' => now()->format('Y-m-d'),
             'init' => null,
             'type' => null,
         ],

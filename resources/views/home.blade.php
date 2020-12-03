@@ -14,7 +14,8 @@
 
         @if (session('file'))
         <div class="uk-alert-success" uk-alert>
-            <p>{{ session('file') }}</p>
+            <a class="uk-alert-close" uk-close></a>
+            <p>To download your generated file click <a href="{{ session('file') }}"><b>here</b></a></p>
         </div>
         @endif
 
