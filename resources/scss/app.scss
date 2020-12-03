@@ -12,3 +12,8 @@ $global-danger-background: #f0506e !default;
 // @mixin hook-card() { color: #000; }
 // 4. Import UIkit.
 @import "~uikit/src/scss/uikit-theme.scss";
+.paypal {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}

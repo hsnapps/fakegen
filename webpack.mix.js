@@ -13,4 +13,7 @@ mix.scripts([
         'node_modules/uikit/dist/JS/uikit-icons.js',
     ], 'public/js/app.js')
     .sass('resources/scss/app.scss', 'public/css')
+    .styles([
+        'resources/css/small.css'
+    ], 'public/css/small.css')
     .version();

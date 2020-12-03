@@ -1,12 +1,12 @@
 <div class="uk-grid-small uk-child-width-expand" uk-grid>
-    <div>
+    <div class="uk-width-auto@m uk-width-auto@l uk-width-auto@xl uk-width-expand@s">
         <label class="uk-form-label" for="label">Label</label>
         <div class="uk-form-controls">
             <input class="uk-input" id="label" name="label" type="text" placeholder="Label" required autocomplete="off" autofocus>
         </div>
     </div>
 
-    <div>
+    <div class="uk-width-auto@m uk-width-auto@l uk-width-auto@xl uk-width-expand@s">
         <label class="uk-form-label" for="category">Data Category</label>
         <div class="uk-form-controls">
             <select class="uk-select" id="category" name="category" onchange="fillSubCategories(event.target.value)"></select>
