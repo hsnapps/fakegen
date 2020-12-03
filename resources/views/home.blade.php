@@ -7,17 +7,9 @@
     </div>
 
     <div class="uk-card-body">
-        <div id="err-alert" class="uk-alert-danger" style="display: none" uk-alert>
-            <a class="uk-alert-close" uk-close></a>
-            <p id="err-message"></p>
-        </div>
+        @include('components.error')
 
-        @if (session('file'))
-        <div class="uk-alert-success" uk-alert>
-            <a class="uk-alert-close" uk-close></a>
-            <p>To download your generated file click <a href="{{ session('file') }}"><b>here</b></a></p>
-        </div>
-        @endif
+        @include('components.download')
 
         @include('shared.validation')
         @include('components.form')

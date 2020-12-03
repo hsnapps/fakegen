@@ -247,21 +247,4 @@ class HomeController extends Controller
         ];
         return Storage::disk('downloads')->download($file, $name, $headers);
     }
-
-    public function flush()
-    {
-        $files = Storage::disk('downloads')->files('');
-
-        foreach ($files as $file) {
-            $lastModified = Storage::disk('downloads')->lastModified($file);
-            $date = Carbon::parse(date('Y-m-d H:i:s', $lastModified));
-            $diffInHours = $date->diffInHours(now());
-            if ($diffInHours > 2) {
-                Storage::disk('downloads')->delete($file);
-            }
-        }
-
-        Log::channel('flush')->info(sprintf('Flushed %d files.', count($files)));
-        return response('', 200);
-    }
 }
