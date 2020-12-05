@@ -3,7 +3,7 @@
 @section('content')
 <form class="uk-form-stacked uk-card uk-card-default uk-width-1-1" action="{{ route('add') }}" method="POST">
     <div class="uk-card-header">
-        <h3><span uk-icon="icon: plus"></span> Add Feild</h3>
+        <h3><span uk-icon="icon: plus"></span> {{ __('app.add-feild') }}</h3>
     </div>
 
     <div class="uk-card-body">
@@ -17,7 +17,7 @@
 
     <div class="uk-card-footer">
         @csrf
-        <button type="submit" class="uk-button uk-button-default uk-align-right"><span uk-icon="icon: plus"></span> Add feild</button>
+        <button type="submit" class="uk-button uk-button-default uk-align-{{ __('app.dir') === 'rtl' ?  'left' : 'right' }}"><span uk-icon="icon: plus"></span> {{ __('app.add-feild') }}</button>
     </div>
 </form>
 
@@ -28,7 +28,3 @@
 @endif
 
 @endsection
-
-@push('scripts')
-<script src="{{ url('js/home.js') }}"></script>
-@endpush

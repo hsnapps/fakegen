@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\{Arr, Str};
-use Illuminate\Support\Facades\{Storage, Log};
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use Carbon\Carbon;
 use Faker\Factory;
 use App\Code\Generator;
 use App\Exports\GeneralExport;
@@ -167,8 +166,6 @@ class HomeController extends Controller
 
     public function generate(Request $request)
     {
-        // dd($request->all());
-
         $format = strtolower($request->format);
         $table = $this->getSortedData();
         $faker = Factory::create($request->locale);
@@ -194,46 +191,18 @@ class HomeController extends Controller
         foreach ($table as $key => $value) {
             $header = $value['label'];
             array_push($headers, $header);
+            $provider = $value['category'];
 
-            if ($value['category'] === 'person') {
-                for ($i=0; $i < $request->number; $i++) {
-                    $data[$i][$header] = Generator::person($value, $faker);
-                }
-            }
-
-            if ($value['category'] === 'datetime') {
-                for ($i=0; $i < $request->number; $i++) {
-                    $data[$i][$header] = Generator::datetime($value, $faker);
-                }
-            }
-
-            if($value['category'] === 'address') {
-                for ($i=0; $i < $request->number; $i++) {
-                    $data[$i][$header] = Generator::address($value, $faker);
-                }
-            }
-
-            if($value['category'] === 'company') {
-                for ($i=0; $i < $request->number; $i++) {
-                    $data[$i][$header] = Generator::company($value, $faker);
-                }
-            }
-
-            if($value['category'] === 'phoneNumber') {
-                for ($i=0; $i < $request->number; $i++) {
-                    $data[$i][$header] = Generator::phoneNumber($value, $faker);
-                }
+            for ($i=0; $i < $request->number; $i++) {
+                $data[$i][$header] = Generator::generate($provider, $value, $faker);
             }
         }
-
-        // dd($data);
 
         $export = new GeneralExport($data, $headers);
         if (Excel::store($export, $fileName, 'downloads')) {
             return redirect()->route('home')->with('file', route('download', ['file' => $fileName]));
         }
 
-        // return back()->with('error', 'Error in generating file!');
         return redirect()->route('home')->with('error', 'Error in generating file!');
     }
 

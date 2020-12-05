@@ -22,4 +22,4 @@ Route::post('/move-up', [HomeController::class, 'moveUp'])->name('move-up');
 Route::post('/move-down', [HomeController::class, 'moveDown'])->name('move-down');
 Route::post('/generate', [HomeController::class, 'generate'])->name('generate');
 Route::get('/download/{file}', [HomeController::class, 'download'])->name('download');
-Route::get('/flush', [HomeController::class, 'flush'])->name('flush');
+Route::view('/howto', 'howto')->name('howto');

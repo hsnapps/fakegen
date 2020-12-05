@@ -3,6 +3,12 @@ const headers = {
     'Accept': 'application/json'
 };
 
+var changeLabel = true;
+
+document.getElementById('label').addEventListener('change', () => {
+    changeLabel = false;
+});
+
 function fillCategories() {
     const url = '/api/categories';
 
@@ -46,6 +52,13 @@ function fillSubCategories(category) {
 function renderProperties(subcategory) {
     const category = document.getElementById('category').value;
     const url = '/api/render/' + category + '/' + subcategory;
+    const caption = document.getElementById('label').value;
+
+    if(document.getElementById('label').value.length === 0 || changeLabel) {
+        const sel = document.getElementById('sub-category');
+        document.getElementById('label').value = sel.options[sel.selectedIndex].text;
+        changeLabel = true;
+    }
 
     document.getElementById('init').setAttribute('type', 'text');
     fetch(url, headers)
@@ -56,7 +69,16 @@ function renderProperties(subcategory) {
             for (const item in data) {
                 if (item === 'title') continue;
 
+                if (item === 'help') {
+                    document.getElementById('help').innerHTML = `<footer>${data['help']}</footer>`;
+                    continue;
+                }
+
                 var show = data[item] === null ? 'none' : 'block';
+                var min = document.getElementById('min');
+                var max = document.getElementById('max');
+                var init = document.getElementById('init');
+
                 document.getElementById(item + '_div').style.display = show;
 
                 if (item === 'type') {
@@ -68,19 +90,24 @@ function renderProperties(subcategory) {
                         }
                         document.getElementById('type').innerHTML = html;
                     } else {
-                        document.getElementById('type_div').style.display = 'none';
                         var val = data['type'];
+                        document.getElementById('type_div').style.display = 'none';
+
                         switch (val) {
                             case 'date':
-                                document.getElementById('init').setAttribute('type', 'date');
-                                document.getElementById('min').setAttribute('type', 'date');
-                                document.getElementById('max').setAttribute('type', 'date');
+                                init.setAttribute('type', 'date');
+                                min.setAttribute('type', 'date');
+                                max.setAttribute('type', 'date');
                                 break;
 
                             case 'number':
-                                document.getElementById('init').setAttribute('type', 'number');
-                                document.getElementById('min').setAttribute('type', 'number');
-                                document.getElementById('max').setAttribute('type', 'number');
+                                init.setAttribute('type', 'number');
+                                min.setAttribute('type', 'number');
+                                min.setAttribute('min', data['min']);
+                                min.setAttribute('max', data['max']);
+                                max.setAttribute('type', 'number');
+                                max.setAttribute('min', data['min']);
+                                max.setAttribute('max', data['max']);
                                 break;
 
                             default:
@@ -88,13 +115,13 @@ function renderProperties(subcategory) {
                         }
 
                         if (data['init']) {
-                            document.getElementById('init').value = data['init'];
+                            init.value = data['init'];
                         }
                     }
                 }
 
-                document.getElementById('min').value = data['min'];
-                document.getElementById('max').value = data['max'];
+                min.value = data['min'];
+                max.value = data['max'];
             }
         })
         .catch(err => showError(err));
@@ -103,7 +130,7 @@ function renderProperties(subcategory) {
 function showError(err) {
     document.getElementById('err-message').innerText = err;
     document.getElementById('err-alert').style.display = 'block';
-    // console.error(err);
+    console.error(err);
 }
 
 function removeRow(key) {
@@ -129,6 +156,11 @@ function down(key, index, count) {
     if (index === count) return;
     document.getElementById('down-key').value = key;
     document.getElementById('down-form').submit();
+}
+
+function changeLocale(e) {
+    // window.location.host
+    document.location.assign('?lang=' + e.target.value)
 }
 
 fillCategories();
