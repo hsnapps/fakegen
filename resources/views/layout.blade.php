@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="fakegen.online: free random fake data generator for any purposes." lang="en"/>
+    <meta name="description" content="fakegen.online: مولد بيانات عشوائية مجاني" lang="ar"/>
+	<meta name="keywords" content="Random Data, Test Data, Sample Data, data generator, generate data, fake data, fakephp, excel" />
     <title>{{ config('app.name') }}</title>
     <link rel="shortcut icon" type="image/png" href="{{ url('images/favicon.png') }}">
     <link rel="stylesheet" href="{{ __('app.dir') === 'rtl' ?  url('css/uikit-rtl.min.css') : url('css/uikit.min.css') }}">
@@ -34,5 +37,8 @@
     <script src="{{ url('js/uikit-icons.min.js') }}"></script>
     @include('shared.flashes')
     <script src="{{ url('js/home.js') }}"></script>
+    @if (!env('APP_DEBUG'))
+    <script type="text/javascript" charset="UTF-8" src="//cdn.cookie-script.com/s/fa45644ff513284c2ce79dcc7c6ef699.js"></script>
+    @endif
 </body>
 </html>

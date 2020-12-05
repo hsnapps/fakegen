@@ -836,8 +836,8 @@ return [
         'paragraph' => [
             'title' => 'Paragraph',
             'size' => null,
-            'min' => 1,
-            'max' => 6,
+            'min' => null,
+            'max' => null,
             'init' => null,
             'type' => 'number',
             'help' => "Generate a paragraph of text, containing a given amount of sentences.",
