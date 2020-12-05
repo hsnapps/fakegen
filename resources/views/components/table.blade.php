@@ -1,6 +1,6 @@
 <div class="uk-form-horizontal uk-card uk-card-default uk-card-body uk-width-1-1 uk-margin-large-top">
     <div class="uk-overflow-auto">
-        <table class="uk-table uk-table-hover uk-text-small@s uk-text-small@m">
+        <table id="fields-list" class="uk-table uk-table-hover uk-text-small@s uk-text-small@m">
             <caption>@lang('app.fields-list')</caption>
             <thead>
                 <tr>
@@ -14,14 +14,6 @@
                     <th></th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <td colspan="3">
-                        <button type="button" class="uk-button uk-button-text uk-text-large@m uk-margin-large-right@m" uk-toggle="target: #modal-generate" ><span uk-icon="icon: cog"></span> {{ __('app.generate') }}</button>
-                        <button type="submit" class="uk-button uk-button-text uk-text-danger uk-text-large@m" onclick="removeAll()"><span uk-icon="icon: trash"></span> {{ __('app.remove-all') }}</button>
-                    </td>
-                </tr>
-            </tfoot>
             <tbody>
                 @foreach ($table as $key => $value)
                     @if (!isset($value['label']))
@@ -45,6 +37,14 @@
                 </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <button type="button" class="uk-button uk-button-text uk-text-large@m uk-margin-large-right@m" onclick="generate(event)"><span uk-icon="icon: cog"></span> {{ __('app.generate') }}</button>
+                        <button type="submit" class="uk-button uk-button-text uk-text-danger uk-text-large@m" onclick="removeAll()"><span uk-icon="icon: trash"></span> {{ __('app.remove-all') }}</button>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

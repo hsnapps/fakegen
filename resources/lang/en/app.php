@@ -40,4 +40,13 @@ return [
     ],
     'contact' => 'Source code',
     'used-libraries' => 'Used Libraries',
+    'messages' => [
+        'ok' => 'OK',
+        'cancel' => 'Cancel',
+        'remove-all' => 'Remove all entries?',
+        'remove-row' => 'Remove this entry?',
+        'all-rows-removed' => 'All feilds have been removed successfully..',
+        'rows-removed' => 'Row has been removed successfully..',
+        'row-added' => 'Field added successfully..',
+    ],
 ];

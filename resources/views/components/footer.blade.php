@@ -12,6 +12,10 @@
         <div class="uk-width-1-3@m uk-width-1-1@s">
             <ul class="uk-list uk-list-hyphen">
                 <li><a href="{{ route('howto', ['lang' => app()->getLocale()]) }}">@lang('app.howto-title')</a></li>
+                <li>
+                    <button class="uk-button uk-button-text" uk-toggle="target: #donate" type="button">@lang('donate.link')</button>
+                    @include('components.donate')
+                </li>
             </ul>
         </div>
         <div class="uk-width-1-3@m uk-width-1-1@s">

@@ -1,4 +1,4 @@
-<form id="delete-form" action="{{ route('remove') }}" method="post">
+<form id="delete-form" action="{{ route('remove', ['lang' => app()->getLocale()]) }}" method="post">
     @csrf
     <input type="hidden" name="key" id="delete-key">
 </form>
@@ -13,6 +13,6 @@
     <input type="hidden" name="key" id="down-key">
 </form>
 
-<form id="remove-all" action="{{ route('remove-all') }}" method="post">
+<form id="remove-all" action="{{ route('remove-all', ['lang' => app()->getLocale()]) }}" method="post">
     @csrf
 </form>

@@ -10,8 +10,15 @@
     <link rel="stylesheet" media="screen and (max-width: 600px)" href="{{ url('css/small.css') }}">
 </head>
 <body>
-    <div class="paypal" style="position: absolute; top: 5px; right: 5px;">
-        @include('components.language')
+    <div class="uk-width-1-1" style="position: absolute; top: 5px; right: 5px;">
+        <div class="uk-float-left">
+            <a href="https://paypal.me/HassanBaabdullah" target="_blank">
+                <img id="donate-here" src="{{ url('images/paypal-1.png') }}" width="120" uk-img>
+            </a>
+        </div>
+        <div class="uk-float-right">
+            @include('components.language')
+        </div>
     </div>
     <div class="uk-container uk-container-large uk-padding">
         <div class="uk-text-center" style="direction: ltr !important">

@@ -18,16 +18,4 @@ return [
     'miscellaneous' => 'Miscellaneous',
     'biased' => 'Biased',
     'htmllorem' => 'HtmlLorem',
-
-    // 'lorem' => 'Lorem',
-    //
-    //
-    //
-    //
-    //
-    // 'image' => 'Image',
-    //
-    //
-    //
-    //
 ];

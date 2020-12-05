@@ -98,8 +98,23 @@ class Generator
     public static function payment(array $data, Faker $faker) : string
     {
         $subCategory = $data['sub_category'];
-        if ($subCategory === 'invalid-creditCardExpirationDateString') {
-            return $faker->creditCardExpirationDateString(false);
+        $type = $data['type'];
+        $lang = request()->get('lang');
+        $valid = __('types.payment.creditCardExpirationDateString.type.0', [], $lang);
+
+        if ($subCategory === 'creditCardExpirationDateString') {
+            return $faker->creditCardExpirationDateString($type == $valid);
+        }
+        if ($subCategory === 'creditCardNumber') {
+            return $faker->creditCardNumber($type);
+        }
+        if ($subCategory === 'iban') {
+            $countries = __('countries', [], $lang);
+            $code = array_search('Saudi Arabia', $countries, true);
+            if ($code === false) {
+                return $faker->iban();
+            }
+            return $faker->iban($code);
         }
         return $faker->$subCategory();
     }
@@ -145,7 +160,17 @@ class Generator
         $subCategory = $data['sub_category'];
         $min = $data['min'];
         $max = $data['max'];
-        return $faker->$subCategory($min, $max);
+        $init = $data['init'];
+
+        switch ($subCategory) {
+            case 'sentence':
+            case 'paragraph':
+            case 'text':
+                return $faker->$subCategory($init);
+
+            default:
+                return $faker->$subCategory($min, $max);
+        }
     }
 
     public static function numbers(array $data, Faker $faker) : string

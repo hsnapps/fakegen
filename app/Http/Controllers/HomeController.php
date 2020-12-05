@@ -74,19 +74,19 @@ class HomeController extends Controller
 
         session([$key => $data]);
 
-        return back()->with('success', 'Field added successfully..');
+        return back()->with('success', __('app.messages.row-added', [], $request->lang));
     }
 
-    public function removeAllRows()
+    public function removeAllRows(Request $request)
     {
         $this->removeAll();
-        return back()->with('success', 'All feilds have been removed..');
+        return back()->with('success', __('app.messages.all-rows-removed', [], $request->lang));
     }
 
     public function removeRow(Request $request)
     {
         session()->forget($request->key);
-        return back()->with('success', 'Row has been removed successfully..');
+        return back()->with('success', __('app.messages.rows-removed', [], $request->lang));
     }
 
     public function moveUp(Request $request)

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
-    public function getCategories()
+    public function getCategories(Request $request)
     {
-        return response()->json(__('categories'));
+        return response()->json(__('categories', [], $request->lang));
     }
 
-    public function getSubCategories($category)
+    public function getSubCategories(Request $request, $category)
     {
         $data = [];
-        $types = __('types')[$category];
+        $types = __('types', [], $request->lang)[$category];
         foreach ($types as $key => $value) {
             $data[$key] = $value['title'];
         }
@@ -22,9 +22,29 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
-    public function render($category, $subcategory)
+    public function render(Request $request, $category, $subcategory)
     {
-        $data = __('types')[$category][$subcategory];
+        $data = __('types', [], $request->lang)[$category][$subcategory];
         return response()->json($data);
+    }
+
+    public function getMessage(Request $request, $key)
+    {
+        return __('app.messages.'.$key, [], $request->lang);
+    }
+
+    public function getButtons(Request $request)
+    {
+        $ok = __('app.messages.ok', [], $request->lang);
+        $cancel = __('app.messages.cancel', [], $request->lang);
+        logger([
+            'lang: '.$ok,
+            'ok: '.$request->lang,
+            'cancel: '.$cancel,
+        ]);
+        return response()->json([
+            'ok' => $ok,
+            'cancel' => $cancel,
+        ]);
     }
 }
