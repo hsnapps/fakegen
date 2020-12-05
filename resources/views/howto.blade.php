@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layout')
 
 @section('content')
 <h1 class="uk-heading-divider">@lang('app.howto-title')</h1>
