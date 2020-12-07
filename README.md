@@ -1,5 +1,7 @@
 <p align="center"><a href="https://fakegen.online/" target="_blank"><img src="https://fakegen.online/public/readme/logo.png" width="600"></a></p>
-
+<p align="center">
+<a href="https://github.com/hsnapps/fakegen/releases/tag/1.0"><img src="https://img.shields.io/github/v/release/hsnapps/fakegen?style=plastic" alt="Release"></a>
+</p>
 ## About
 
 A simple web app to generate fake date for testing purposes.
