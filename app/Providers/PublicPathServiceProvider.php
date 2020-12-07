@@ -23,7 +23,7 @@ class PublicPathServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('*', function($view) {
+        view()->composer('layout', function($view) {
             $public = env('APP_DEBUG', false) ? '' : 'public/';
 
             $favicon = url($public.'images/favicon.png');
