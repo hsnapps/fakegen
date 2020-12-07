@@ -41,6 +41,12 @@ if (!function_exists('url')) {
     }
 }
 
+$downloads = __DIR__.'/../public/downloads';
+if(!file_exists($downloads)) {
+    $storage_path = __DIR__.'/../storage/app/downloads';
+    symlink($storage_path, $downloads);
+}
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
