@@ -13,7 +13,7 @@
 <body>
     <script data-name="BMC-Widget" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="hsnab" data-description="Support me on Buy me a coffee!" data-message="Thank you for visiting. You can now buy me a coffee!" data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
     <div class="uk-width-1-1" style="position: absolute; top: 0; right: 5px;">
-        <div class="uk-float-right">
+        <div class="uk-float-left uk-margin-small-left">
             @include('components.language')
         </div>
     </div>
