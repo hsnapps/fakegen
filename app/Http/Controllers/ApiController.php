@@ -37,11 +37,6 @@ class ApiController extends Controller
     {
         $ok = __('app.messages.ok', [], $request->lang);
         $cancel = __('app.messages.cancel', [], $request->lang);
-        logger([
-            'lang: '.$ok,
-            'ok: '.$request->lang,
-            'cancel: '.$cancel,
-        ]);
         return response()->json([
             'ok' => $ok,
             'cancel' => $cancel,
