@@ -2,6 +2,7 @@
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 define('LARAVEL_START', microtime(true));
 
@@ -18,6 +19,26 @@ define('LARAVEL_START', microtime(true));
 
 if (file_exists(__DIR__.'/../storage/framework/maintenance.php')) {
     require __DIR__.'/../storage/framework/maintenance.php';
+}
+
+// Define my own url function
+if (!function_exists('url')) {
+    /**
+     * Generate a url for the application.
+     *
+     * @param  string|null  $path
+     * @param  mixed  $parameters
+     * @param  bool|null  $secure
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     */
+    function url($path = null, $parameters = [], $secure = null)
+    {
+        if (is_null($path)) {
+            return app(UrlGenerator::class);
+        }
+
+        return app(UrlGenerator::class)->to($path, $parameters, $secure);
+    }
 }
 
 /*
