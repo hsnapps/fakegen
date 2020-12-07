@@ -9,9 +9,7 @@
                 <p class="uk-display-inline">@lang('donate.message')</p>
             </div>
             <div class="uk-width-1-2 uk-margin-auto-vertical uk-text-center">
-                <a href="https://paypal.me/HassanBaabdullah" target="_blank">
-                    <img id="donate-here" src="{{ url('images/paypal-2.png') }}" width="180" uk-img>
-                </a>
+                <a href="https://www.buymeacoffee.com/hsnab"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=hsnab&button_colour=5F7FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00"></a>
             </div>
         </div>
     </div>
